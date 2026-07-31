@@ -5,7 +5,7 @@
    ========================================================== */
 const CONFIG = {
   // Link to your profile (Instagram / TikTok / YouTube / Discord...)
-  followUrl: "https://instagram.com/your_account",
+  followUrl: "https://youtube.com/@pelimenmod?si=vf-nC-JGbrJl80ES",
   followLabel: "Follow Me",
 
   // Link to the video you want watched & liked
