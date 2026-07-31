@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="sr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Link Vault — Zaprati i Otključaj</title>
-  <meta name="description" content="Zaprati me da otključaš link." />
+  <title>Link Vault — Follow & Unlock</title>
+  <meta name="description" content="Follow to unlock the link." />
 
-  <!-- Google Fonts: Space Grotesk (naslovi), Inter (tekst), JetBrains Mono (kod) -->
+  <!-- Google Fonts: Space Grotesk (headings), Inter (body), JetBrains Mono (code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <!-- Ambient pozadina — čisto dekorativno, ne mora se dirati -->
+  <!-- Ambient background — purely decorative, no need to touch -->
   <div class="bg-glow bg-glow--one" aria-hidden="true"></div>
   <div class="bg-glow bg-glow--two" aria-hidden="true"></div>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -27,48 +27,48 @@
         <span class="brand-mark">&gt;_</span>
         <span class="brand-name">Link Vault</span>
       </div>
-      <p class="page-subtitle">Zaprati me u koraku 1, pa se vrati ovde — link se sam otključava.</p>
+      <p class="page-subtitle">Follow in step 1, then come back here — the link unlocks itself.</p>
     </header>
 
     <main class="gate">
 
       <!-- ================================================================
-           KORAK 1 — dugme za praćenje
+           STEP 1 — follow button
            ================================================================
-           ✏️  Link ka tvom profilu se menja u script.js -> CONFIG.followUrl
-           ✏️  Tekst dugmeta se menja u script.js -> CONFIG.followLabel
+           ✏️  Your profile link is set in script.js -> CONFIG.followUrl
+           ✏️  Button text is set in script.js -> CONFIG.followLabel
            ================================================================ -->
       <section class="card gate-card">
         <div class="card-glow" aria-hidden="true"></div>
 
         <div class="card-head">
-          <span class="card-tag">Korak 1</span>
-          <h2 class="card-title">Zaprati me</h2>
-          <p class="gate-desc">Klikni dugme ispod, zaprati me na mreži, pa se vrati na ovaj tab — link ispod će se sam otključati.</p>
+          <span class="card-tag">Step 1</span>
+          <h2 class="card-title">Follow Me</h2>
+          <p class="gate-desc">Click the button below, follow me, then come back to this tab — the link below will unlock itself.</p>
         </div>
 
         <a class="follow-btn" id="followBtn" href="#" target="_blank" rel="noopener">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M12 21s-7.5-4.6-10-9.3C.5 8.1 2.3 4.5 6 4c2-.3 3.6.6 6 3 2.4-2.4 4-3.3 6-3 3.7.5 5.5 4.1 4 7.7-2.5 4.7-10 9.3-10 9.3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           </svg>
-          <span id="followBtnText">Zaprati me</span>
+          <span id="followBtnText">Follow Me</span>
         </a>
 
-        <p class="status-text" id="statusText">Čekam da klikneš dugme iznad…</p>
+        <p class="status-text" id="statusText">Waiting for you to click the button above…</p>
       </section>
 
       <!-- ================================================================
-           KORAK 2 — zaključan / otključan glavni link
+           STEP 2 — locked / unlocked main link
            ================================================================
-           ✏️  Pravi link se menja u script.js -> CONFIG.mainUrl
-           ✏️  Tekst dugmeta se menja u script.js -> CONFIG.mainLabel
+           ✏️  The real link is set in script.js -> CONFIG.mainUrl
+           ✏️  Button text is set in script.js -> CONFIG.mainLabel
            ================================================================ -->
       <section class="card lock-card">
         <div class="card-glow" aria-hidden="true"></div>
 
         <div class="card-head">
-          <span class="card-tag">Korak 2</span>
-          <h2 class="card-title">Tvoj link</h2>
+          <span class="card-tag">Step 2</span>
+          <h2 class="card-title">Your Link</h2>
         </div>
 
         <div class="lock-wrap" id="lockWrap">
@@ -76,7 +76,7 @@
             <svg class="main-btn__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <span id="mainBtnText">Otvori Link</span>
+            <span id="mainBtnText">Open Link</span>
           </a>
 
           <div class="lock-overlay" id="lockOverlay">
@@ -87,7 +87,7 @@
             <svg class="spinner-icon" id="spinnerIcon" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="42 100"/>
             </svg>
-            <p class="lock-text" id="lockText">Zaključano</p>
+            <p class="lock-text" id="lockText">Locked</p>
           </div>
         </div>
       </section>
@@ -95,13 +95,13 @@
     </main>
 
     <footer class="page-footer">
-      <p>Besplatno · Samo mi vrati jedan follow 🙏</p>
+      <p>Free · Just give me a follow back 🙏</p>
     </footer>
 
   </div>
 
-  <!-- Toast obavještenje -->
-  <div class="toast" id="toast" role="status" aria-live="polite">Otključano!</div>
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite">Unlocked!</div>
 
   <script src="script.js"></script>
 </body>
