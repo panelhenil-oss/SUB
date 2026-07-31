@@ -13,7 +13,7 @@ const CONFIG = {
   videoLabel: "Watch & Like",
 
   // The REAL link that gets unlocked (only revealed after both steps are done)
-  mainUrl: "https://example.com/your-real-link",
+  mainUrl: "https://youtu.be/dfpSUBsLc8g?si=GvCbWzAPN7EHqYAe",
   mainLabel: "Open Link",
 
   // Minimum time (in seconds) that must pass FROM THE LATER OF THE TWO
