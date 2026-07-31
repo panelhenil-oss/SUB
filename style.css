@@ -1,7 +1,7 @@
 /* ==========================================================
    DESIGN TOKENS
-   Ovdje su glavne boje i razmaci — promijeni ih ako želiš
-   drugačiju paletu, ali dizajn će raditi i bez ikakvih izmjena.
+   Main colors and spacing live here — change them for a
+   different palette, the design still works without any edits.
    ========================================================== */
 :root {
   --bg: #06070a;
@@ -52,8 +52,8 @@ body {
 }
 
 /* ==========================================================
-   AMBIENT BACKGROUND — glow blobovi + fina mreža
-   Čisto dekorativno, slobodno mijenjaj boje/opacity.
+   AMBIENT BACKGROUND — glow blobs + fine grid
+   Purely decorative, feel free to tweak colors/opacity.
    ========================================================== */
 .bg-glow {
   position: fixed;
@@ -165,7 +165,7 @@ body {
 }
 
 /* ==========================================================
-   GATE — kontejner za korak 1 (follow) i korak 2 (zaključan link)
+   GATE — container for step 1 (follow) and step 2 (locked link)
    ========================================================== */
 .gate {
   width: 100%;
@@ -210,7 +210,7 @@ body {
   transform: translateY(-3px);
 }
 
-/* Meki glow koji se pojača na hover, iza sadržaja kartice */
+/* Soft glow that intensifies on hover, behind the card content */
 .card-glow {
   position: absolute;
   inset: -40%;
@@ -250,7 +250,7 @@ body {
   margin-bottom: 14px;
 }
 
-/* Naslov kartice — mijenja se u index.html, stil ostaje isti */
+/* Card title — edited in index.html, style stays the same */
 .card-title {
   font-family: var(--font-display);
   font-weight: 700;
@@ -270,7 +270,7 @@ body {
 }
 
 /* ==========================================================
-   FOLLOW BUTTON — korak 1 CTA
+   FOLLOW BUTTON — step 1 CTA
    ========================================================== */
 .follow-btn {
   display: inline-flex;
@@ -309,7 +309,7 @@ body {
   outline-offset: 3px;
 }
 
-/* Kad je "zaprati" korak već obavljen */
+/* Once the "follow" step is already done */
 .follow-btn.is-done {
   background: linear-gradient(135deg, #baffe0, #6ff0bb);
   box-shadow: 0 16px 36px -12px var(--green-soft);
@@ -335,7 +335,7 @@ body {
 }
 
 /* ==========================================================
-   LOCK WRAP — korak 2, zaključan/otključan glavni link
+   LOCK WRAP — step 2, locked/unlocked main link
    ========================================================== */
 .lock-wrap {
   position: relative;
@@ -383,7 +383,7 @@ body {
   outline-offset: 3px;
 }
 
-/* Overlay preko dugmeta dok je zaključano / dok se "provjerava" */
+/* Overlay on top of the button while locked / while "verifying" */
 .lock-overlay {
   position: absolute;
   inset: -6px;
@@ -446,7 +446,7 @@ body {
 }
 
 /* ==========================================================
-   TOAST — mala potvrda u donjem dijelu ekrana
+   TOAST — small confirmation at the bottom of the screen
    ========================================================== */
 .toast {
   position: fixed;
@@ -473,7 +473,7 @@ body {
 }
 
 /* ==========================================================
-   RESPONSIVE — mobilni uređaji
+   RESPONSIVE — mobile devices
    ========================================================== */
 @media (max-width: 480px) {
   .page {
