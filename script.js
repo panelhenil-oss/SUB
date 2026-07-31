@@ -1,25 +1,25 @@
 /* ==========================================================
-   LINK VAULT — "follow to unlock" logic
+   LINK VAULT — "complete both steps to unlock" logic
 
    ✏️  EVERYTHING YOU NEED TO CHANGE IS BELOW, IN "CONFIG":
    ========================================================== */
 const CONFIG = {
   // Link to your profile (Instagram / TikTok / YouTube / Discord...)
   followUrl: "https://instagram.com/your_account",
-
-  // Text on the step 1 button
   followLabel: "Follow Me",
 
-  // The REAL link that gets unlocked (only revealed after they follow)
-  mainUrl: "https://example.com/your-real-link",
+  // Link to the video you want watched & liked
+  videoUrl: "https://youtube.com/your-video",
+  videoLabel: "Watch & Like",
 
-  // Text on the step 2 button
+  // The REAL link that gets unlocked (only revealed after both steps are done)
+  mainUrl: "https://example.com/your-real-link",
   mainLabel: "Open Link",
 
-  // Minimum time (in seconds) that must pass FROM THE MOMENT OF THE CLICK
-  // on "Follow Me" before the link unlocks — no matter when the user
-  // comes back to this tab. If they come back earlier, the spinner just
-  // keeps spinning until this time has passed.
+  // Minimum time (in seconds) that must pass FROM THE LATER OF THE TWO
+  // CLICKS before the link unlocks — no matter when the user comes back
+  // to this tab. If they come back earlier, the spinner just keeps
+  // spinning until this time has passed.
   minWaitSeconds: 8,
 };
 
@@ -30,6 +30,8 @@ const CONFIG = {
 document.addEventListener('DOMContentLoaded', () => {
   const followBtn = document.getElementById('followBtn');
   const followBtnText = document.getElementById('followBtnText');
+  const videoBtn = document.getElementById('videoBtn');
+  const videoBtnText = document.getElementById('videoBtnText');
   const statusText = document.getElementById('statusText');
 
   const mainBtn = document.getElementById('mainBtn');
@@ -43,49 +45,62 @@ document.addEventListener('DOMContentLoaded', () => {
   // Apply text and links from CONFIG
   followBtn.href = CONFIG.followUrl;
   followBtnText.textContent = CONFIG.followLabel;
+  videoBtn.href = CONFIG.videoUrl;
+  videoBtnText.textContent = CONFIG.videoLabel;
   mainBtnText.textContent = CONFIG.mainLabel;
 
   const MIN_WAIT_MS = CONFIG.minWaitSeconds * 1000;
   // Always show the spinner for at least a moment, even on a late return.
   const MIN_SPINNER_MS = 900;
 
-  // Everything is remembered via sessionStorage — the click time and
-  // whether it's unlocked — so refreshing the page mid-process doesn't
-  // reset the countdown or allow "cheating" by reloading.
-  let clickTime = parseInt(sessionStorage.getItem('lv_clickTime') || '0', 10) || null;
+  // Everything is remembered via sessionStorage — each click's timestamp
+  // and whether it's unlocked — so refreshing the page mid-process
+  // doesn't reset progress or allow "cheating" by reloading.
+  let followClickTime = parseInt(sessionStorage.getItem('lv_followClickTime') || '0', 10) || null;
+  let videoClickTime = parseInt(sessionStorage.getItem('lv_videoClickTime') || '0', 10) || null;
   let unlocked = sessionStorage.getItem('lv_unlocked') === '1';
   let verifyTimeoutId = null;
   let countdownIntervalId = null;
 
-  if (clickTime) {
-    setFollowDoneUI();
-  }
+  if (followClickTime) setActionDoneUI(followBtn, followBtnText, CONFIG.followLabel);
+  if (videoClickTime) setActionDoneUI(videoBtn, videoBtnText, CONFIG.videoLabel);
 
   if (unlocked) {
     unlockLink(true);
-  } else if (clickTime) {
-    // If the page was refreshed while already waiting, resume the countdown.
-    statusText.textContent = 'Come back to this tab after you follow — the link unlocks itself.';
-    statusText.classList.add('is-active');
-    handleReturnToTab();
+  } else {
+    updateWaitingStatus();
+    if (followClickTime || videoClickTime) handleReturnToTab();
   }
 
-  // Step 1: click on "Follow Me"
+  // Step 1: click on either action button
   followBtn.addEventListener('click', () => {
-    if (clickTime) return; // already clicked, don't reset the timer
-    clickTime = Date.now();
-    sessionStorage.setItem('lv_clickTime', String(clickTime));
-    setFollowDoneUI();
-    statusText.textContent = 'Opened the follow page — come back here once you\u2019ve followed.';
-    statusText.classList.add('is-active');
+    if (followClickTime) return; // already clicked, don't reset the timer
+    followClickTime = Date.now();
+    sessionStorage.setItem('lv_followClickTime', String(followClickTime));
+    setActionDoneUI(followBtn, followBtnText, CONFIG.followLabel);
+    updateWaitingStatus();
   });
 
-  // When the user returns to this tab (or reloads it), check how much
-  // time has actually passed since the click and set/extend the timer.
-  function handleReturnToTab() {
-    if (!clickTime || unlocked) return;
+  videoBtn.addEventListener('click', () => {
+    if (videoClickTime) return;
+    videoClickTime = Date.now();
+    sessionStorage.setItem('lv_videoClickTime', String(videoClickTime));
+    setActionDoneUI(videoBtn, videoBtnText, CONFIG.videoLabel);
+    updateWaitingStatus();
+  });
 
-    const elapsed = Date.now() - clickTime;
+  // When the user returns to this tab (or reloads it), check whether both
+  // steps are done and, if so, how much time has passed since the later
+  // click — then set/extend the verifying timer accordingly.
+  function handleReturnToTab() {
+    if (unlocked) return;
+    if (!followClickTime || !videoClickTime) {
+      updateWaitingStatus();
+      return;
+    }
+
+    const lastClick = Math.max(followClickTime, videoClickTime);
+    const elapsed = Date.now() - lastClick;
     const remaining = Math.max(MIN_WAIT_MS - elapsed, MIN_SPINNER_MS);
 
     startOrUpdateVerifying(remaining);
@@ -96,9 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   window.addEventListener('focus', handleReturnToTab);
 
-  function setFollowDoneUI() {
-    followBtn.classList.add('is-done');
-    followBtnText.textContent = 'Followed \u2713';
+  function setActionDoneUI(btn, textEl, originalLabel) {
+    btn.classList.add('is-done');
+    textEl.textContent = `${originalLabel} \u2713`;
+  }
+
+  function updateWaitingStatus() {
+    const doneCount = (followClickTime ? 1 : 0) + (videoClickTime ? 1 : 0);
+    if (doneCount === 0) {
+      statusText.textContent = 'Waiting for you to complete both steps above…';
+      statusText.classList.remove('is-active', 'is-done');
+    } else if (doneCount === 1) {
+      statusText.textContent = '1 of 2 done — complete the other step too, then come back here.';
+      statusText.classList.add('is-active');
+      statusText.classList.remove('is-done');
+    }
   }
 
   function startOrUpdateVerifying(remainingMs) {
@@ -148,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lockOverlay.classList.add('is-unlocked');
     lockText.textContent = 'Unlocked';
 
-    statusText.textContent = 'Link unlocked. Thanks for the follow! 🎉';
+    statusText.textContent = 'Link unlocked. Thanks for the support! 🎉';
     statusText.classList.remove('is-active');
     statusText.classList.add('is-done');
 
