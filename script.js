@@ -5,15 +5,15 @@
    ========================================================== */
 const CONFIG = {
   // Link to your profile (Instagram / TikTok / YouTube / Discord...)
-  followUrl: "https://youtube.com/@pelimenmod?si=-n4xiFJR4hRoxnN-",
+  followUrl: "https://instagram.com/your_account",
   followLabel: "Follow Me",
 
   // Link to the video you want watched & liked
-  videoUrl: "https://youtu.be/dfpSUBsLc8g?si=GvCbWzAPN7EHqYAe",
+  videoUrl: "https://youtube.com/your-video",
   videoLabel: "Watch & Like",
 
   // The REAL link that gets unlocked (only revealed after both steps are done)
-  mainUrl: "https://link-hub.net/1239053/hZhrv6TlFLCJ",
+  mainUrl: "https://example.com/your-real-link",
   mainLabel: "Open Link",
 
   // Minimum time (in seconds) that must pass FROM THE LATER OF THE TWO
