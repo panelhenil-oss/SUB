@@ -118,10 +118,6 @@
   <!-- Toast notification -->
   <div class="toast" id="toast" role="status" aria-live="polite">Unlocked!</div>
 
-  <script>
-    var lvScript = document.createElement('script');
-    lvScript.src = 'script.js?v=' + Date.now();
-    document.body.appendChild(lvScript);
-  </script>
+  <script>document.write('<script src="script.js?v=' + Date.now() + '"><' + '/script>');</script>
 </body>
 </html>
