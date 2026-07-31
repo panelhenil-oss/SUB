@@ -270,17 +270,25 @@ body {
 }
 
 /* ==========================================================
-   FOLLOW BUTTON — step 1 CTA
+   ACTION ROW — step 1 CTAs, side by side (follow + watch & like)
    ========================================================== */
-.follow-btn {
+.action-row {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.action-btn {
+  flex: 1;
+  min-width: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 16px 24px;
+  gap: 8px;
+  padding: 14px 10px;
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: #06070a;
   text-decoration: none;
@@ -288,32 +296,43 @@ body {
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, background 0.25s ease;
   box-shadow: 0 12px 30px -12px var(--violet-soft);
-  position: relative;
-  z-index: 1;
 }
 
-.follow-btn:hover {
+.action-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action-btn:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
   box-shadow: 0 16px 36px -12px rgba(139, 107, 255, 0.55);
 }
 
-.follow-btn:active {
+.action-btn:active {
   transform: translateY(0);
 }
 
-.follow-btn:focus-visible {
+.action-btn:focus-visible {
   outline: 2px solid var(--violet);
   outline-offset: 3px;
 }
 
-/* Once the "follow" step is already done */
-.follow-btn.is-done {
+/* Once this particular step is already done */
+.action-btn.is-done {
   background: linear-gradient(135deg, #baffe0, #6ff0bb);
   box-shadow: 0 16px 36px -12px var(--green-soft);
   pointer-events: none;
+}
+
+@media (max-width: 380px) {
+  .action-row {
+    flex-direction: column;
+  }
 }
 
 .status-text {
