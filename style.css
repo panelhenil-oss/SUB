@@ -274,21 +274,21 @@ body {
    ========================================================== */
 .action-row {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 12px;
   position: relative;
   z-index: 1;
 }
 
 .action-btn {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 10px;
+  gap: 10px;
+  padding: 16px 18px;
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 0.98rem;
   font-weight: 600;
   color: #06070a;
   text-decoration: none;
@@ -329,11 +329,6 @@ body {
   pointer-events: none;
 }
 
-@media (max-width: 380px) {
-  .action-row {
-    flex-direction: column;
-  }
-}
 
 .status-text {
   margin-top: 14px;
