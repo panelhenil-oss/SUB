@@ -1,30 +1,30 @@
 /* ==========================================================
-   LINK VAULT — logika za "zaprati da otključaš"
+   LINK VAULT — "follow to unlock" logic
 
-   ✏️  SVE ŠTO TREBA DA MENJAŠ JE OVDE DOLE, U "CONFIG":
+   ✏️  EVERYTHING YOU NEED TO CHANGE IS BELOW, IN "CONFIG":
    ========================================================== */
 const CONFIG = {
-  // Link ka tvom profilu (Instagram / TikTok / YouTube / Discord...)
-  followUrl: "https://instagram.com/tvoj_nalog",
+  // Link to your profile (Instagram / TikTok / YouTube / Discord...)
+  followUrl: "https://instagram.com/your_account",
 
-  // Tekst na dugmetu za korak 1
-  followLabel: "Zaprati me",
+  // Text on the step 1 button
+  followLabel: "Follow Me",
 
-  // PRAVI link koji se otključava (ovo dobijaju tek nakon što zaprate)
-  mainUrl: "https://example.com/tvoj-pravi-link",
+  // The REAL link that gets unlocked (only revealed after they follow)
+  mainUrl: "https://example.com/your-real-link",
 
-  // Tekst na dugmetu za korak 2
-  mainLabel: "Otvori Link",
+  // Text on the step 2 button
+  mainLabel: "Open Link",
 
-  // Minimalno vreme (u sekundama) koje mora proći OD TRENUTKA KLIKA na
-  // "Zaprati me" pre nego što se link otključa — bez obzira kad se
-  // korisnik vrati na ovaj tab. Ako se vrati ranije, spinner samo
-  // nastavlja da se vrti dok ne prođe ovo vreme.
+  // Minimum time (in seconds) that must pass FROM THE MOMENT OF THE CLICK
+  // on "Follow Me" before the link unlocks — no matter when the user
+  // comes back to this tab. If they come back earlier, the spinner just
+  // keeps spinning until this time has passed.
   minWaitSeconds: 8,
 };
 
 /* ==========================================================
-   Od ovde na dole ne treba ništa da diraš.
+   Nothing below this line needs to be touched.
    ========================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,18 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const toast = document.getElementById('toast');
   let toastTimeout = null;
 
-  // Postavi tekstove i linkove iz CONFIG-a
+  // Apply text and links from CONFIG
   followBtn.href = CONFIG.followUrl;
   followBtnText.textContent = CONFIG.followLabel;
   mainBtnText.textContent = CONFIG.mainLabel;
 
   const MIN_WAIT_MS = CONFIG.minWaitSeconds * 1000;
-  // Da se spinner uvek makar malo vidi i kad se korisnik vrati kasno.
+  // Always show the spinner for at least a moment, even on a late return.
   const MIN_SPINNER_MS = 900;
 
-  // Sve se pamti preko sessionStorage — vreme klika i da li je
-  // otključano, tako da osvežavanje stranice usred procesa ne resetuje
-  // odbrojavanje niti dozvoljava "varanje" ponovnim učitavanjem.
+  // Everything is remembered via sessionStorage — the click time and
+  // whether it's unlocked — so refreshing the page mid-process doesn't
+  // reset the countdown or allow "cheating" by reloading.
   let clickTime = parseInt(sessionStorage.getItem('lv_clickTime') || '0', 10) || null;
   let unlocked = sessionStorage.getItem('lv_unlocked') === '1';
   let verifyTimeoutId = null;
@@ -64,24 +64,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (unlocked) {
     unlockLink(true);
   } else if (clickTime) {
-    // Ako je stranica osvežena dok se već čekalo, nastavi odbrojavanje.
-    statusText.textContent = 'Vrati se na ovaj tab kad zaprati\u0161 — link se sam otključava.';
+    // If the page was refreshed while already waiting, resume the countdown.
+    statusText.textContent = 'Come back to this tab after you follow — the link unlocks itself.';
     statusText.classList.add('is-active');
     handleReturnToTab();
   }
 
-  // Korak 1: klik na "Zaprati me"
+  // Step 1: click on "Follow Me"
   followBtn.addEventListener('click', () => {
-    if (clickTime) return; // već kliknuto, ne resetuj tajmer
+    if (clickTime) return; // already clicked, don't reset the timer
     clickTime = Date.now();
     sessionStorage.setItem('lv_clickTime', String(clickTime));
     setFollowDoneUI();
-    statusText.textContent = 'Otvorio sam stranicu za praćenje — vrati se ovde nakon što zaprati\u0161.';
+    statusText.textContent = 'Opened the follow page — come back here once you\u2019ve followed.';
     statusText.classList.add('is-active');
   });
 
-  // Kad se korisnik vrati na ovaj tab (ili ga učita ponovo), proveri
-  // koliko je vremena stvarno prošlo od klika i postavi/produži tajmer.
+  // When the user returns to this tab (or reloads it), check how much
+  // time has actually passed since the click and set/extend the timer.
   function handleReturnToTab() {
     if (!clickTime || unlocked) return;
 
@@ -98,18 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setFollowDoneUI() {
     followBtn.classList.add('is-done');
-    followBtnText.textContent = 'Zaprato ✓';
+    followBtnText.textContent = 'Followed \u2713';
   }
 
   function startOrUpdateVerifying(remainingMs) {
     lockOverlay.classList.add('is-verifying');
-    statusText.textContent = 'Hvala! Proveravam i otključavam link…';
+    statusText.textContent = 'Thanks! Verifying and unlocking the link…';
     statusText.classList.remove('is-active');
     statusText.classList.add('is-done');
 
     updateCountdownText(remainingMs);
 
-    // Ponovni ulazak na tab ne sme da pravi gomilu paralelnih tajmera.
+    // Re-entering the tab shouldn't stack up parallel timers.
     clearTimeout(verifyTimeoutId);
     clearInterval(countdownIntervalId);
 
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCountdownText(ms) {
     const seconds = Math.max(1, Math.ceil(ms / 1000));
-    lockText.textContent = `Proveravam… ${seconds}s`;
+    lockText.textContent = `Verifying… ${seconds}s`;
   }
 
   function unlockLink(skipToast) {
@@ -146,14 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     lockOverlay.classList.remove('is-verifying');
     lockOverlay.classList.add('is-unlocked');
-    lockText.textContent = 'Otključano';
+    lockText.textContent = 'Unlocked';
 
-    statusText.textContent = 'Link je otključan. Hvala na pratnji! 🎉';
+    statusText.textContent = 'Link unlocked. Thanks for the follow! 🎉';
     statusText.classList.remove('is-active');
     statusText.classList.add('is-done');
 
     if (!skipToast) {
-      showToast('Link otključan! 🎉');
+      showToast('Link unlocked! 🎉');
     }
   }
 
