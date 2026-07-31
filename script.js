@@ -5,7 +5,7 @@
    ========================================================== */
 const CONFIG = {
   // Link to your profile (Instagram / TikTok / YouTube / Discord...)
-  followUrl: "https://youtube.com/@pelimenmod?si=WVnyo0kRwjpOBSL2",
+  followUrl: "https://instagram.com/your_account",
   followLabel: "Follow Me",
 
   // Link to the video you want watched & liked
@@ -27,7 +27,7 @@ const CONFIG = {
    Nothing below this line needs to be touched.
    ========================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initLinkVault() {
   const followBtn = document.getElementById('followBtn');
   const followBtnText = document.getElementById('followBtnText');
   const videoBtn = document.getElementById('videoBtn');
@@ -193,4 +193,12 @@ document.addEventListener('DOMContentLoaded', () => {
       toast.classList.remove('is-visible');
     }, 2400);
   }
-});
+}
+
+// Run immediately if the page is already ready, otherwise wait for it.
+// This makes the script work correctly no matter how or when it's loaded.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLinkVault);
+} else {
+  initLinkVault();
+}
