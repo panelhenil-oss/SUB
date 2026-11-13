@@ -1,55 +1,17 @@
 /* ==========================================================
    SADRŽAJ SAJTA — napravio Script Update Editor.
-   Najlakše je mijenjati kroz program. Tip sajta: skripte.
+   Najlakše je mijenjati kroz program. Tip sajta: update stranica.
    ========================================================== */
 window.SITE_CONFIG = {
-  "type": "hub",
-  "version": "c85e6ce5",
-  "site": {
-    "brand": "BEST SCRIPT ",
-    "menuSubtitle": "Choose your game to get the latest scripts.",
-    "footer": "Works on every device · Copy & Paste"
-  },
-  "games": [
-    {
-      "id": "egg",
-      "name": "Steal An Egg",
-      "subtitle": "Here you can find the two latest scripts.",
-      "icon": "images/egg-b7915f01.webp",
-      "scripts": [
-        {
-          "title": "1 NO KEY SCRIPT",
-          "code": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua\"))()"
-        },
-        {
-          "title": "2 NO KEY SCRIPT",
-          "code": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/miirandahub/loader/main/stealaeggs\"))()"
-        }
-      ]
-    },
-    {
-      "id": "rivals",
-      "name": "Rivals",
-      "subtitle": "NEW Rivals Script No Key Silent Aim Aimbot Auto Leveling Rank Farm",
-      "icon": "images/rivals-9ca629c6.webp",
-      "scripts": [
-        {
-          "title": "NO KEY SCRIPT",
-          "code": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v3/loaders/2529a5f9dfddd5523ca4e22f21cceffa.lua\"))()"
-        }
-      ]
-    },
-    {
-      "id": "blox-fruits",
-      "name": "Blox Fruits",
-      "subtitle": "Blox Fruits Script No Key Halloween Event",
-      "icon": "images/blox-fruits-11f0655a.webp",
-      "scripts": [
-        {
-          "title": "NO KEY SCRIPT",
-          "code": "loadstring(game:HttpGet(\"https://flowauth.net/v1/loaders/Aqua-Hub.lua\"))()"
-        }
-      ]
-    }
-  ]
+  "type": "update",
+  "version": "8966414f",
+  "update": {
+    "pageTitle": "Script Updated — Latest Version Available",
+    "pill": "Update available",
+    "title": "Script Updated",
+    "text": "A new version of the script has just been released, and the link you previously used is now out of date. To keep things running smoothly, please switch to the current version below — it will always point to the most recent release, so you never have to guess which link is the right one.",
+    "button": "Open New Link",
+    "link": "https://link-center.net/1239053/8LaXQXUskjc3",
+    "footnote": "This link is refreshed regularly — bookmarking it will always get you the latest version."
+  }
 };
