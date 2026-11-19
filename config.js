@@ -4,14 +4,14 @@
    ========================================================== */
 window.SITE_CONFIG = {
   "type": "update",
-  "version": "53805c2d",
+  "version": "e439612b",
   "update": {
     "pageTitle": "Script Updated — Latest Version Available",
     "pill": "Update available",
     "title": "Script Updated",
     "text": "A new version of the script has just been released, and the link you previously used is now out of date. To keep things running smoothly, please switch to the current version below — it will always point to the most recent release, so you never have to guess which link is the right one.",
     "button": "Open New Link",
-    "link": "https://link-hub.net/1239053/QpZR3fvzRnFo",
+    "link": "https://link-target.net/1239053/8kbc2nrN1bya",
     "footnote": "This link is refreshed regularly — bookmarking it will always get you the latest version."
   }
 };
